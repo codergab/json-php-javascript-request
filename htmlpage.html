@@ -1,12 +1,8 @@
-<select id="gender" name="gender">
-  <option value="male">Male</option>
-  <option value="female">Female</option>
-</select>
 
-<table id="people" border="1">
+<table id="movies" border="1">
   <thead>
     <th>Name</th>
-    <th>Gender</th>
+    <th>Image</th>
   </thead>
   <tbody>
 
@@ -15,29 +11,30 @@
 
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script>
-$("#gender").on("change", function() {
+$(window).on("load", function() {
   $.ajax({
     type: "POST",
     data: {
-      "gender": $("#gender").val()
+      "resptype": "all";
     },
+    // we are doing this as if its on the same page, you should replace the url with the url in the documentation page     
     url: "response.php",
     dataType: "json",
     success: function(JSONObject) {
-      var peopleHTML = "";
+      var movieHTML = "";
 
       // Loop through Object and create peopleHTML
       for (var key in JSONObject) {
         if (JSONObject.hasOwnProperty(key)) {
-          peopleHTML += "<tr>";
-            peopleHTML += "<td>" + JSONObject[key]["name"] + "</td>";
-            peopleHTML += "<td>" + JSONObject[key]["gender"] + "</td>";
-          peopleHTML += "</tr>";
+          movieHTML += "<tr>";
+            movieHTML += "<td>" + JSONObject[key]["name"] + "</td>";
+            movieHTML += "<td>" + JSONObject[key]["image"] + "</td>";
+          movieHTML += "</tr>";
         }
       }
 
       // Replace table’s tbody html with peopleHTML
-      $("#people tbody").html(peopleHTML);
+      $("#movies tbody").html(movieHTML);
     }
   });
 });
