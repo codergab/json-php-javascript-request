@@ -1,29 +1,34 @@
 <?php
   // File: response.php
 
-  // Get GET moviename value
-  $gender = $_POST["moviename"];
+  // Get response type
+  $resp = $_POST["resptype"];
 
-  // Connect to the database
-  // replace the parameters with your proper credentials
-  $connection = mysqli_connect("localhost", "username", "password", "database_name");
+  if($resp == "all") {
 
-  // Query to run
-  $query = mysqli_query($connection,
-           "SELECT * FROM movies_in_db");
+    // Connect to the database
+    // replace the parameters with your proper credentials
+    $connection = mysqli_connect("localhost", "username", "password", "database_name");
 
-  // Create empty array to hold query results
-  $someArray = [];
+    // Query to run
+    $query = mysqli_query($connection,
+             "SELECT * FROM movies_in_db");
 
-  // Loop through query and push results into $someArray;
-  while ($row = mysqli_fetch_assoc($query)) {
-    array_push($someArray, [
-      'name'   => $row['movie_name'],
-      'image' => $row['movie_image']
-    ]);
+    // Create empty array to hold query results
+    $someArray = [];
+
+    // Loop through query and push results into $someArray;
+    while ($row = mysqli_fetch_assoc($query)) {
+      array_push($someArray, [
+        'name'   => $row['movie_name'],
+        'image' => $row['movie_image']
+      ]);
+    }
+
+    // Convert the Array to a JSON String and echo it
+    $someJSON = json_encode($someArray);
+    echo $someJSON;
+    
+    mysqli_close($connection);
   }
-
-  // Convert the Array to a JSON String and echo it
-  $someJSON = json_encode($someArray);
-  echo $someJSON;
 ?>
