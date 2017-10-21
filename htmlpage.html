@@ -39,3 +39,19 @@ $(window).on("load", function() {
   });
 });
 </script>
+
+<!--  Below is another example on how to pull response from the API  (MovieAPI) with AJAX-->
+$.ajax({                                      
+  url: 'api.php', data: "", dataType: 'json',  success: function(rows)        
+  {
+    for (var i in rows)
+    {
+      var row = rows[i];          
+
+      var id = row[0];
+      var vname = row[1];
+      $('#output').append("<b>id: </b>"+id+"<b> name: </b>"+vname)
+                  .append("<hr />");
+    } 
+  } 
+});
